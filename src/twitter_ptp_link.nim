@@ -16,7 +16,7 @@ routes:
     let twitterName = $payload["twname"]
     var twitterID = ""
 
-    let config = loadConfig(getHomeDir() & ".config/twitter_dm_intent/" & "twitter_bot.cfg")
+    let config = loadConfig(getHomeDir() / ".config/twitter_ptp_link" / "keys.cfg")
     let consumerToken = newConsumerToken(config.getSectionValue("", "twitterConsumer"),
                                          config.getSectionValue("", "twitterConsumerSecret"))
     let twitterAPI = newTwitterApi(consumerToken,
