@@ -1,0 +1,80 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+<body>
+    <h1>
+        Twitter Public to Private Link Generator
+    </h1>
+    <form enctype="application/json" id="form">
+        <input type="text" name="twname" placeholder="Twitter username"></input><br>
+        <input type="text" name="message" placeholder="Message to be included"></input><br>
+        <input type="submit" value="Submit" id="submit"></input>
+    </form>
+    
+    <div class="container">
+        <div id="linkOutput">Click submit to generate link</div> 
+        <button id="clipboard" onclick="CopyToClipboard('linkOutput')"><i class="fas fa-clipboard"></i></button>
+    </div>
+
+    <footer>
+        By <a href="https://twitter.com/sn_fk_n">@sn_fk_n</a>
+    </footer>
+
+    <script>
+        async function sendData(formData) {
+            const plainFormData = Object.fromEntries(formData.entries());
+            const formDataJsonString = JSON.stringify(plainFormData);
+
+            const fetchOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: formDataJsonString,
+            };
+
+            const response = await fetch('/createString', fetchOptions);
+
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                return "There was an error, perhaps the user supplied doesn't exist";
+            }
+
+            return response.text(); 
+        }
+        
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.currentTarget;
+
+            try {
+                const formData = new FormData(form);
+                const newLink = await sendData(formData);
+                document.getElementById("linkOutput").innerHTML = newLink;
+            } catch (error) {
+                console.error(error)
+            }
+        };
+
+        const form = document.getElementById("form");
+        form.addEventListener("submit", handleFormSubmit);
+
+        function CopyToClipboard(containerid) {
+          if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select().createTextRange();
+            document.execCommand("copy");
+          } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+          }
+        }
+    </script>
+</body>
+</html>

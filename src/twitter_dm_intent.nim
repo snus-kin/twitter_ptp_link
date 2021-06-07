@@ -3,17 +3,17 @@ import parsecfg, json, htmlgen, uri, os, httpclient
 
 routes:
   get "/":
-    let page = form(action="/createString", `method`="POST", enctype="application/json",
-                    input(`type`="text", name="username"),
-                    input(`type`="text", name="message"),
-                    input(`type`="submit", value="submit")
-                )
+    const page = staticRead"index.html"
     resp page
 
+  get "/style.css":
+    const style = staticRead"style.css"
+    resp style
+
   post "/createString":
-    let payload = request.params
+    let payload = parseJson(request.body)
     # Get Twitter ID from API
-    let twitterName = payload["username"]
+    let twitterName = $payload["twname"]
     var twitterID = ""
 
     let config = loadConfig(getHomeDir() & ".config/twitter_dm_intent/" & "twitter_bot.cfg")
@@ -23,12 +23,18 @@ routes:
                                    config.getSectionValue("", "twitterToken"),
                                    config.getSectionValue("", "twitterSecret"))
 
-    let user = parseJson(twitterAPI.usersShow(twitterName).body)
-    twitterID = $user["id"]
+    let user = parseJson(twitterAPI.usersShow(twitterName[1..twitterName.high-1]).body)
+
+    try:
+      twitterID = $user["id"]
+    except:
+      # If there's no ID we can 502
+      resp Http502
 
     # Create string
-    let message = payload["message"]
+    let message = $payload["message"]
+    let strippedMessage = message[1..message.high-1]
 
-    let query = {"text": $message, "recipient_id": $twitterID}
+    let query = {"text": $strippedMessage, "recipient_id": $twitterID}
     let url = parseUri("https://twitter.com") / "messages" / "compose" ? query
     resp p($url)
