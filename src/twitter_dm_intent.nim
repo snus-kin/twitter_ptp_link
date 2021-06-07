@@ -1,5 +1,5 @@
 import jester, twitter
-import parsecfg, json, htmlgen, uri, os, httpclient
+import parsecfg, json, uri, os, httpclient
 
 routes:
   get "/":
@@ -37,4 +37,4 @@ routes:
 
     let query = {"text": $strippedMessage, "recipient_id": $twitterID}
     let url = parseUri("https://twitter.com") / "messages" / "compose" ? query
-    resp p($url)
+    resp $url
