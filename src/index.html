@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>
-        Twitter Public to Private Link Generator
+        Twitter Public to Private Message Link Generator
     </h1>
     <form enctype="application/json" id="form">
         <input type="text" name="twname" placeholder="Twitter username"></input><br>
@@ -16,6 +16,14 @@
     <div class="container">
         <div id="linkOutput">Click submit to generate link</div> 
         <button id="clipboard" onclick="CopyToClipboard('linkOutput')"><i class="fas fa-clipboard"></i></button>
+    </div>
+
+    <div class="about">
+        <p>The link produced by this website can be pasted in a tweet to create
+        a badge that directs people to message you.</p>
+
+        <p>I created this website as the twitter documentation isn't complete,
+        and doesn't show you that you can also include a message.</p>
     </div>
 
     <footer>

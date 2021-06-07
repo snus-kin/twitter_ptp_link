@@ -12,7 +12,7 @@ body {
     color: #ffffff;
     font-size: 12pt;
     font-weight: 800;
-    padding: 20%;
+    padding: 5% 25%;
 }
 
 h1 {
@@ -32,13 +32,13 @@ br {
 /* Thanks, Loni for this anim */
 a {
     color: #ffffff;
-    text-decoration: overline #0066B2;
+    text-decoration: overline #1DA1F2;
     font-weight: bold;
     position: relative; /*creates new positioning context so that manual sizing works below*/
 }
 
 a::before{
-  background-color: #0066B2;
+  background-color: #1DA1F2;
   
   position: absolute; /*so that it overlaps*/
   z-index: -1; /*stay back bitch*/
@@ -117,6 +117,7 @@ input[type=text] {
     font-family: inherit;
     font-size: 12pt;
     font-weight: 800;
+    border: 0;
 }
 
 input[type=submit] {
@@ -135,4 +136,8 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: #F0E2D1;
+}
+
+.about {
+    width: 75%;
 }
