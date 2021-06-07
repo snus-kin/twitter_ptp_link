@@ -2,10 +2,10 @@
 
 version       = "0.1.0"
 author        = "snus-kin"
-description   = "Twitter dm intent link webapp"
+description   = "Twitter public to private message link webapp"
 license       = "GPL-3.0"
 srcDir        = "src"
-bin           = @["twitter_dm_intent"]
+bin           = @["twitter_ptp_link"]
 
 
 
